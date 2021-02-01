@@ -44,14 +44,14 @@ class CsvDriverTest {
     void testWritingCsvFile() throws IOException {
         FileWriter out = new FileWriter(
                 "E:\\personal-projects\\java-codes\\apache-commons-csv-poc\\src\\test" + "\\resources\\books_new.csv");
-        CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(HEADERS));
-        AUTHOR_BOOK_MAP.forEach((author, title) -> {
-            try {
-                printer.printRecord(author, title);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
+       try(CSVPrinter printer = CSVFormat.EXCEL.withHeader(HEADERS).print(out)) {
+           AUTHOR_BOOK_MAP.forEach((author, title) -> {
+               try {
+                   printer.printRecord(author, title);
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           });
+       }
     }
 }
